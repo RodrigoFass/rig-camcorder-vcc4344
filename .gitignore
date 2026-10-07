@@ -1,0 +1,8 @@
+build/
+*.log
+__pycache__/
+/*.stl
+*.gcode
+*.blend1
+.DS_Store
+Thumbs.db
