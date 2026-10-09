@@ -11,7 +11,7 @@ As mesas da pasta `mesas/` foram montadas para a **Anycubic Kobra X** (mesa de 2
 | 4 | `4_parafusos_PLA.3mf` | PLA | ~12 g |
 | 5 | `5_trava_ponte_PETG.3mf` | PETG (ou PLA) | ~6 g |
 | 6 | `6_trava_celular_PLA.3mf` | PLA | ~20 g |
-| 7 | clip do celular (opção fixa, [gere você mesmo](SUPORTE_CLIP.md)) | PETG | ~28 g |
+| 7 | clip do celular (opção fixa, [gere você mesmo](SUPORTE_CLIP.md)) | PETG | ~30 g |
 | 8 | `8_porca_clip_PLA.3mf` (opção fixa) | PLA | ~3 g |
 
 Na opção fixa com o clip, não precisa de garfo, braço, garra e mordente (mesa 3), da mesa 6 nem dos parafusos da articulação (mesa 4). A chave do cabo, que também sai na mesa 4, continua necessária.

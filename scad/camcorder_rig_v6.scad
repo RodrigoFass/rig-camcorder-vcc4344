@@ -797,14 +797,25 @@ CB_Z0 = Z_PAN + 3.5;             // fundo do rebaixo: 3,5 mm de furo em D travam
 CB_R = 7;                        // rebaixo da porca-botão
 CK_D = 18;  CK_H = 7;  CK_Z0 = CL_OZ + 8;     // botão (acima do corpo, atrás do celular)
 PH_CASE = 1.3;                   // capinha (por lado), só para a montagem
-module clip_rig_2d() {           // perfil do clip sem a garra de baixo + pé
-    intersection() { polygon(CLP); translate([-100, CL_Y0 + 0.2]) square([200, 100]); }
-    if (len(CLP) > 0)
-        polygon([[CL_X0, CL_Y0 - CL_FT], [CL_X1, CL_Y0 - CL_FT], [CL_X1, CL_Y0 + 0.5], [-10, CL_Y0 + 0.5], [CL_X0, CL_Y0 + 3.5]]);
+CL_INC = 15;                     // inclinação do celular para trás (tela apontando um pouco para cima), graus
+CL_XF = 33.5;                    // frente da base reta do pé
+module rot_cl() { translate([CL_PX, CL_Y0]) rotate(CL_INC) translate([-CL_PX, -CL_Y0]) children(); }   // pivô: pino do giro
+module clip_corpo_2d(p) {        // clip sem a garra de baixo + pé (antes de inclinar)
+    intersection() { polygon(p); translate([-100, CL_Y0 + 0.2]) square([200, 100]); }
+    polygon([[CL_X0, CL_Y0 - CL_FT - 6], [CL_X1, CL_Y0 - CL_FT - 6], [CL_X1, CL_Y0 + 0.5], [-10, CL_Y0 + 0.5], [CL_X0, CL_Y0 + 3.5]]);
 }
-module clip_rig() {
+module clip_rig_2d(p = CLP) {    // corpo inclinado + base reta apoiada na base do giro
+    if (len(p) > 0) intersection() {
+        union() {
+            rot_cl() clip_corpo_2d(p);
+            translate([CL_X0, CL_Y0 - CL_FT]) square([CL_XF - CL_X0, CL_FT + 1.2]);
+        }
+        translate([-100, CL_Y0 - CL_FT]) square([200, 200]);
+    }
+}
+module clip_rig(p = CLP) {
     difference() {
-        translate([0, CL_OY, CL_OZ]) along_x(-CLW/2, CLW/2) clip_rig_2d();
+        translate([0, CL_OY, CL_OZ]) along_x(-CLW/2, CLW/2) clip_rig_2d(p);
         f_giro() {
             // furo em D no pino do giro: a face plana do pino trava o clip (teto reto ao imprimir de lado)
             translate([0, 0, Z_PAN - 1]) linear_extrude(CB_Z0 - Z_PAN + 1.01)
@@ -816,16 +827,9 @@ module clip_rig() {
 }
 // só para a ilustração da montagem: a mola em espiral esticada e a garra de cima em cima do celular
 CL_ABRE = 3.6 + PH[1] + 2*PH_CASE - 34;
-module clip_aberto() {
-    intersection() {
-        clip_rig();
-        translate([-50, -200, 0]) cube([100, 400, CL_OZ + 9.02]);
-    }
-    translate([0, CL_OY, CL_OZ]) along_x(-CLW/2, CLW/2)
-        intersection() {
-            polygon([for (p = CLP) [p[0], p[1] + CL_ABRE*min(1, max(0, (p[1] - 9)/19.5))]]);
-            translate([-100, 9.01]) square([200, 200]);
-        }
+module clip_aberto() { clip_rig([for (q = CLP) [q[0], q[1] + CL_ABRE*min(1, max(0, (q[1] - 9)/19.5))]]); }
+module f_incl_cl() {             // sistema do perfil inclinado (para o celular da montagem)
+    translate([0, PC, CL_Y0 + CL_OZ]) rotate([CL_INC, 0, 0]) translate([0, -PC, -(CL_Y0 + CL_OZ)]) children();
 }
 module porca_clip() {            // porca-botão: rosqueia no pino do giro e aperta o pé do clip na base do giro
     difference() {
@@ -836,9 +840,9 @@ module porca_clip() {            // porca-botão: rosqueia no pino do giro e ape
         femea(CB_Z0, PIN_Z1 + 1, true, false);
     }
 }
-module phone_clip_ref() {        // S21 com capinha, de pé no clip: fundo nos dentes, frente atrás do lábio
+module phone_clip_ref() {        // S21 com capinha no clip: fundo nos dentes, frente atrás do lábio
     t = PH[2] + 2*PH_CASE;  L = PH[0] + 2*PH_CASE;  H = PH[1] + 2*PH_CASE;
-    translate([-L/2, 24.6 + CL_OY - t, 3.6 + CL_OZ]) cube([L, t, H]);
+    f_incl_cl() translate([-L/2, 24.6 + CL_OY - t, 3.6 + CL_OZ]) cube([L, t, H]);
 }
 if (PART == "montagem") {
     camera_ref(); powerbank_ref(); easycap_ref();
