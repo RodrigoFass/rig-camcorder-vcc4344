@@ -6,6 +6,7 @@ Este rig transforma uma câmera de CCTV analógica (Sanyo VCC-4344) numa filmado
 
 - **Câmera:** fica num berço que também guarda o power bank e a EasyCap.
 - **Celular:** um Android serve de monitor e gravador. Ele fica numa articulação com giro, inclinação e rolagem.
+  - **Opção fixa:** um clip de mola do MakerWorld, preso na base do giro, sem articulação. Veja [Suporte fixo do celular](docs/SUPORTE_CLIP.md).
 - **Modelo paramétrico:** um único arquivo OpenSCAD (`scad/camcorder_rig_v6.scad`) gera todas as peças. As medidas da câmera, do power bank, da EasyCap, do celular e as folgas ficam no começo do arquivo.
 - **Filamento:** ~180 g no rig completo (~80 g de PETG e ~100 g de PLA), mais ~16 g das peças de teste.
 
@@ -51,6 +52,7 @@ Este rig transforma uma câmera de CCTV analógica (Sanyo VCC-4344) numa filmado
 | Trava da ponte (moldura) | `trava_ponte.stl` | 5 (PETG) | 1 |
 | Trava lateral do celular: calha, 2 cursores e 2 botões | `trava_celular.stl` | 6 (PLA) | 5 peças |
 | Provas de encaixe | `testes_pla.stl`, `testes_petg.stl` | 1a / 1b | — |
+| Porca-botão do suporte fixo (só na [opção com clip](docs/SUPORTE_CLIP.md)) | `porca_clip.stl` | 8 (PLA) | 1 |
 
 \* A ponte fica apertada o tempo todo. Se ela ceder com o tempo, reimprima em PETG.
 

@@ -6,3 +6,6 @@ __pycache__/
 *.blend1
 .DS_Store
 Thumbs.db
+
+# clip do MakerWorld (licença do autor: não redistribuir)
+scad/clip_v3_perfil.scad

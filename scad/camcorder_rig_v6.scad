@@ -16,9 +16,10 @@
 //  Coordenadas (mm): X = largura (+X = esquerda do operador), Y = comprimento (lente em −Y),
 //  Z = altura; origem no centro do corpo da câmera.
 //    • extras : trava da ponte (moldura em volta das colunas) e trava lateral do celular ajustável
+//    • opção fixa: clip de mola do MakerWorld na base do giro, no lugar da articulação (veja o fim do arquivo)
 //  Uso: openscad -D 'PART="berco"' -o berco.stl camcorder_rig_v6.scad
-//       PART = montagem | topo | berco | tampa | cabo | garfo | braco | garra | mordente | parafusos |
-//              trava_ponte | trava_celular | testes_petg | testes_pla
+//       PART = montagem (com o clip) | montagem_articulada | topo | berco | tampa | cabo | garfo | braco | garra |
+//              mordente | parafusos | trava_ponte | trava_celular | clip | porca_clip | testes_petg | testes_pla
 // =====================================================================
 
 PART = "montagem";
@@ -575,7 +576,7 @@ module powerbank_ref() { color([0.1, 0.1, 0.12]) translate([0, (PB_Y0 + PB_Y1)/2
 module easycap_ref() { color([0.08, 0.08, 0.08]) translate([EC_X0, EC_Y0, EC_Z0]) cube([EC[2], EC[0], EC[1]]); }
 module phone_ref() { color([0.05, 0.05, 0.07]) translate([-PH[0]/2, Y_C - PH[2]/2, Z_VB + PH[2]/2]) cube([PH[0], PH[2], PH[1]]); }
 
-if (PART == "montagem") {
+if (PART == "montagem_articulada") {      // versão anterior: celular na articulação (giro, inclinação e rolagem)
     camera_ref(); powerbank_ref(); easycap_ref();
     color("dimgray") { berco(); topo(); cabo(); tampa(); }
     color("orange") { chave(); f_giro() { arruela_giro(); porca_giro(); } trava_ponte(); }
@@ -770,3 +771,86 @@ if (PART == "trava_celular") {       // calha + 2 cursores + 2 parafusos, pronto
     for (k = [0, 1]) translate([-10 + 20*k, 62, 0]) translate([0, 0, -(Z_VB - CU_B - CU_GAP - CU_KH)]) paraf_cursor_local();
 }
 TRV = TC_O + 1.6*sqrt(2);        // a calha da trava lateral levanta o celular (2,4 mm)
+
+// =====================================================================
+//  SUPORTE FIXO DO CELULAR (substitui a articulação)
+// =====================================================================
+// O celular fica num clip de mola, fixo na base do giro da ponte, sem movimento:
+//   "Ultimate Desk & Cockpit Phone Holder Clip v3", de RealNationPrint: https://makerworld.com/models/1158094
+// O clip é um perfil 2D extrudado. A garra de cima (com a mola em espiral) segura o celular deitado pela
+// altura; a garra de baixo, que prendia no painel do carro, sai. No lugar dela entra um pé com furo em D
+// que encaixa no pino do giro (não gira) e é apertado por uma porca-botão que rosqueia no pino por cima.
+// O perfil do clip NÃO faz parte deste projeto (licença do autor: uso pessoal, sem redistribuição).
+// Baixe o .3mf no MakerWorld e rode:  python3 tools/clip_perfil.py ClipV3.3mf
+// Isso grava scad/clip_v3_perfil.scad (CLIP_W e CLIP_P). Sem ele, o clip não aparece.
+include <clip_v3_perfil.scad>
+CLW = is_undef(CLIP_W) ? 27.5 : CLIP_W;      // largura do clip (110 %)
+CLP = is_undef(CLIP_P) ? [] : CLIP_P;        // perfil (vazio sem o arquivo gerado)
+// coordenadas do perfil do clip (x, y) → montagem: X = extrusão, Y = x + CL_OY, Z = y + CL_OZ
+// (+x do perfil = lado da tela = operador; o celular fica de pé, tela para trás)
+CL_PX = -7;                      // x do pino do giro no perfil (atrás dos dentes, fora do lugar do celular)
+CL_Y0 = -3.2;                    // fundo plano do corpo do clip
+CL_FT = 6.5;                     // pé: de Z_PAN até o fundo do corpo
+CL_OY = PC - CL_PX;  CL_OZ = Z_PAN + CL_FT - CL_Y0;
+CL_X0 = -21;  CL_X1 = 32.5;      // pé: de trás (sobre a base do giro) até a frente (sob o lábio)
+CB_Z0 = Z_PAN + 3.5;             // fundo do rebaixo: 3,5 mm de furo em D travam o giro
+CB_R = 7;                        // rebaixo da porca-botão
+CK_D = 18;  CK_H = 7;  CK_Z0 = CL_OZ + 8;     // botão (acima do corpo, atrás do celular)
+PH_CASE = 1.3;                   // capinha (por lado), só para a montagem
+module clip_rig_2d() {           // perfil do clip sem a garra de baixo + pé
+    intersection() { polygon(CLP); translate([-100, CL_Y0 + 0.2]) square([200, 100]); }
+    if (len(CLP) > 0)
+        polygon([[CL_X0, CL_Y0 - CL_FT], [CL_X1, CL_Y0 - CL_FT], [CL_X1, CL_Y0 + 0.5], [-10, CL_Y0 + 0.5], [CL_X0, CL_Y0 + 3.5]]);
+}
+module clip_rig() {
+    difference() {
+        translate([0, CL_OY, CL_OZ]) along_x(-CLW/2, CLW/2) clip_rig_2d();
+        f_giro() {
+            // furo em D no pino do giro: a face plana do pino trava o clip (teto reto ao imprimir de lado)
+            translate([0, 0, Z_PAN - 1]) linear_extrude(CB_Z0 - Z_PAN + 1.01)
+                intersection() { circle(r = TH_D/2 + 0.35, $fn = 40); translate([-10, -10]) square([10 + PIN_FLAT + 0.3, 20]); }
+            // rebaixo da porca-botão, em gota (ponta para +X = para cima na impressão)
+            translate([0, 0, CB_Z0]) linear_extrude(CK_Z0 - CB_Z0) gota2d(CB_R, 0);
+        }
+    }
+}
+// só para a ilustração da montagem: a mola em espiral esticada e a garra de cima em cima do celular
+CL_ABRE = 3.6 + PH[1] + 2*PH_CASE - 34;
+module clip_aberto() {
+    intersection() {
+        clip_rig();
+        translate([-50, -200, 0]) cube([100, 400, CL_OZ + 9.02]);
+    }
+    translate([0, CL_OY, CL_OZ]) along_x(-CLW/2, CLW/2)
+        intersection() {
+            polygon([for (p = CLP) [p[0], p[1] + CL_ABRE*min(1, max(0, (p[1] - 9)/19.5))]]);
+            translate([-100, 9.01]) square([200, 200]);
+        }
+}
+module porca_clip() {            // porca-botão: rosqueia no pino do giro e aperta o pé do clip na base do giro
+    difference() {
+        union() {
+            translate([0, 0, CB_Z0]) cylinder(r = CB_R - 0.45, h = CK_Z0 - CB_Z0 + 0.01);
+            translate([0, 0, CK_Z0]) knob(CK_D, CK_H, 12);
+        }
+        femea(CB_Z0, PIN_Z1 + 1, true, false);
+    }
+}
+module phone_clip_ref() {        // S21 com capinha, de pé no clip: fundo nos dentes, frente atrás do lábio
+    t = PH[2] + 2*PH_CASE;  L = PH[0] + 2*PH_CASE;  H = PH[1] + 2*PH_CASE;
+    translate([-L/2, 24.6 + CL_OY - t, 3.6 + CL_OZ]) cube([L, t, H]);
+}
+if (PART == "montagem") {
+    camera_ref(); powerbank_ref(); easycap_ref();
+    color("dimgray") { berco(); topo(); cabo(); tampa(); }
+    color("orange") { chave(); trava_ponte(); f_giro() porca_clip(); }
+    color("white") clip_aberto();
+    color([0.05, 0.05, 0.07]) phone_clip_ref();
+}
+if (PART == "asm_clip")       clip_rig();
+if (PART == "asm_porca_clip") f_giro() porca_clip();
+if (PART == "asm_celular_clip") phone_clip_ref();
+if (PART == "asm_clip_aberto")  clip_aberto();
+// impressão: clip deitado (perfil na mesa, +X para cima: teto reto no furo em D); porca com o botão na mesa
+if (PART == "clip")       translate([0, 0, CLW/2]) rotate([-90, 0, 0]) rotate([0, 0, -90]) translate([0, -CL_OY, -CL_OZ]) clip_rig();
+if (PART == "porca_clip") translate([0, 0, CK_Z0 + CK_H]) rotate([180, 0, 0]) porca_clip();
