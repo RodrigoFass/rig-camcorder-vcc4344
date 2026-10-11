@@ -804,13 +804,22 @@ module clip_corpo_2d(p) {        // clip sem a garra de baixo + pé (antes de in
     intersection() { polygon(p); translate([-100, CL_Y0 + 0.2]) square([200, 100]); }
     polygon([[CL_X0, CL_Y0 - CL_FT - 6], [CL_X1, CL_Y0 - CL_FT - 6], [CL_X1, CL_Y0 + 0.5], [-10, CL_Y0 + 0.5], [CL_X0, CL_Y0 + 3.5]]);
 }
+// trás do pé (lado da lente): passa por cima da barra da frente da trava da ponte e desce até 0,3 mm
+// dela, então a moldura não sobe
+CL_XB = TR_YF - 1 - CL_OY;               // fim do pé, 1 mm além da barra
+CL_XL = PC - YK_R - 0.4 - CL_OY;         // face de dentro da aba (0,4 mm da borda da base do giro)
+CL_YL = TR_Z1 + 0.3 - CL_OZ;             // fundo da aba (0,3 mm acima da moldura)
 module clip_rig_2d(p = CLP) {    // corpo inclinado + base reta apoiada na base do giro
-    if (len(p) > 0) intersection() {
-        union() {
-            rot_cl() clip_corpo_2d(p);
-            translate([CL_X0, CL_Y0 - CL_FT]) square([CL_XF - CL_X0, CL_FT + 1.2]);
+    if (len(p) > 0) {
+        intersection() {
+            union() {
+                rot_cl() clip_corpo_2d(p);
+                translate([CL_X0, CL_Y0 - CL_FT]) square([CL_XF - CL_X0, CL_FT + 1.2]);
+                polygon([[CL_XB, CL_Y0 - CL_FT], [CL_X0 + 1, CL_Y0 - CL_FT], [CL_X0 + 1, CL_Y0 + 1.2], [CL_XB, CL_Y0 + 3.2]]);
+            }
+            translate([-100, CL_Y0 - CL_FT]) square([200, 200]);
         }
-        translate([-100, CL_Y0 - CL_FT]) square([200, 200]);
+        translate([CL_XB, CL_YL]) square([CL_XL - CL_XB, CL_Y0 - CL_FT - CL_YL + 0.01]);   // aba sobre a moldura
     }
 }
 module clip_rig(p = CLP) {

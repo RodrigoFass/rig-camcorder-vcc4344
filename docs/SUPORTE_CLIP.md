@@ -11,6 +11,7 @@ O clip é o [Ultimate Desk & Cockpit Phone Holder Clip v3](https://makerworld.co
 - **A garra de baixo,** que prendia o clip no painel do carro, foi tirada.
 - **No lugar dela entra um pé,** com furo em D que encaixa no pino do giro. A face plana do pino impede o clip de girar.
 - **Uma porca-botão** rosqueia no pino por cima e aperta o pé contra a base.
+- **Trava da ponte presa:** atrás (lado da lente), o pé passa por cima da barra da frente da moldura e desce até 0,3 mm dela, então a moldura não sobe.
 - **Inclinação:** o corpo do clip é inclinado 15° em cima do pé, que continua reto na base. Para mudar, altere `CL_INC` no `.scad`.
 
 ## O arquivo do clip não vem neste projeto
@@ -35,7 +36,7 @@ O arquivo gerado é só para uso pessoal.
 
 | Peça | Material | Configuração | Filamento* |
 |---|---|---|---|
-| Clip (`PART="clip"`) | **PETG** | Deitado, com o perfil na mesa. Camada de 0,2 mm, 3 paredes, 25 % de preenchimento, sem suporte. | ~30 g |
+| Clip (`PART="clip"`) | **PETG** | Deitado, com o perfil na mesa. Camada de 0,2 mm, 3 paredes, 25 % de preenchimento, sem suporte. | ~31 g |
 | Porca-botão (`PART="porca_clip"`) | PLA | Botão na mesa. Mesma configuração das porcas (mesa 4): camada de 0,12 mm, 5 paredes, 40 %. | ~3 g |
 
 \* Estimativa. O fatiador mostra o peso exato.
@@ -63,7 +64,9 @@ O arquivo gerado é só para uso pessoal.
 
 ## Conferido no computador
 
-- **Interferências:** o clip não bate na câmera nem na trava da ponte. Ficam 7 mm até o topo da câmera e 1,5 mm até a moldura.
+- **Interferências:** o clip não bate na câmera nem na trava da ponte.
+  - Ficam 5,8 mm até o topo da câmera.
+  - Atrás, a aba do pé fica 0,3 mm acima da barra da moldura e 0,4 mm da borda da base do giro.
 - **Folgas:**
   - furo em D no pino: 0,2 mm;
   - porca-botão no rebaixo: 0,4 mm;
