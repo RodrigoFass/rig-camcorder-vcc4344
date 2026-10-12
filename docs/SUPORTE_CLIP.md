@@ -11,7 +11,7 @@ O clip é o [Ultimate Desk & Cockpit Phone Holder Clip v3](https://makerworld.co
 - **A garra de baixo,** que prendia o clip no painel do carro, foi tirada.
 - **No lugar dela entra um pé,** com furo em D que encaixa no pino do giro. A face plana do pino impede o clip de girar.
 - **Uma porca-botão** rosqueia no pino por cima e aperta o pé contra a base.
-- **Trava da ponte presa:** atrás (lado da lente), o pé passa por cima da barra da frente da moldura e desce até 0,3 mm dela, então a moldura não sobe.
+- **Trava da ponte:** atrás (lado da lente), o pé se estende por cima da barra da frente da moldura, com o fundo reto, 1,5 mm acima dela.
 - **Inclinação:** o corpo do clip é inclinado 15° em cima do pé, que continua reto na base. Para mudar, altere `CL_INC` no `.scad`.
 
 ## O arquivo do clip não vem neste projeto
@@ -26,8 +26,7 @@ A licença do autor (Standard Digital File License) não permite redistribuir o 
    Isso grava `scad/clip_v3_perfil.scad`, que fica fora do git.
 3. Gere as peças:
    ```
-   openscad -D 'PART="clip"' -o clip.stl scad/camcorder_rig_v6.scad
-   openscad -D 'PART="porca_clip"' -o porca_clip.stl scad/camcorder_rig_v6.scad
+   openscad -D 'PART="clip_e_porca"' -o clip_e_porca.stl scad/camcorder_rig_v6.scad
    ```
 
 O arquivo gerado é só para uso pessoal.
@@ -36,8 +35,9 @@ O arquivo gerado é só para uso pessoal.
 
 | Peça | Material | Configuração | Filamento* |
 |---|---|---|---|
-| Clip (`PART="clip"`) | **PETG** | Deitado, com o perfil na mesa. Camada de 0,2 mm, 3 paredes, 25 % de preenchimento, sem suporte. | ~31 g |
-| Porca-botão (`PART="porca_clip"`) | PLA | Botão na mesa. Mesma configuração das porcas (mesa 4): camada de 0,12 mm, 5 paredes, 40 %. | ~3 g |
+| Clip + porca-botão na mesma mesa (`PART="clip_e_porca"`) | **PETG** | Clip deitado, com o perfil na mesa; porca com o botão na mesa. Camada de 0,2 mm, 3 paredes, 25 % de preenchimento, sem suporte. | ~33 g |
+
+A porca também pode sair sozinha em PLA (`PART="porca_clip"` ou a mesa `8_porca_clip_PLA.3mf`), com camada de 0,12 mm, 5 paredes e 40 %.
 
 \* Estimativa. O fatiador mostra o peso exato.
 
@@ -64,9 +64,7 @@ O arquivo gerado é só para uso pessoal.
 
 ## Conferido no computador
 
-- **Interferências:** o clip não bate na câmera nem na trava da ponte.
-  - Ficam 5,8 mm até o topo da câmera.
-  - Atrás, a aba do pé fica 0,3 mm acima da barra da moldura e 0,4 mm da borda da base do giro.
+- **Interferências:** o clip não bate na câmera nem na trava da ponte. Ficam 7 mm até o topo da câmera e 1,5 mm até a moldura.
 - **Folgas:**
   - furo em D no pino: 0,2 mm;
   - porca-botão no rebaixo: 0,4 mm;

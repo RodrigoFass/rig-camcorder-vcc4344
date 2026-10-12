@@ -19,7 +19,7 @@
 //    • opção fixa: clip de mola do MakerWorld na base do giro, no lugar da articulação (veja o fim do arquivo)
 //  Uso: openscad -D 'PART="berco"' -o berco.stl camcorder_rig_v6.scad
 //       PART = montagem (com o clip) | montagem_articulada | topo | berco | tampa | cabo | garfo | braco | garra |
-//              mordente | parafusos | trava_ponte | trava_celular | clip | porca_clip | testes_petg | testes_pla
+//              mordente | parafusos | trava_ponte | trava_celular | clip | porca_clip | clip_e_porca | testes_petg | testes_pla
 // =====================================================================
 
 PART = "montagem";
@@ -804,11 +804,8 @@ module clip_corpo_2d(p) {        // clip sem a garra de baixo + pé (antes de in
     intersection() { polygon(p); translate([-100, CL_Y0 + 0.2]) square([200, 100]); }
     polygon([[CL_X0, CL_Y0 - CL_FT - 6], [CL_X1, CL_Y0 - CL_FT - 6], [CL_X1, CL_Y0 + 0.5], [-10, CL_Y0 + 0.5], [CL_X0, CL_Y0 + 3.5]]);
 }
-// trás do pé (lado da lente): passa por cima da barra da frente da trava da ponte e desce até 0,3 mm
-// dela, então a moldura não sobe
+// trás do pé (lado da lente): fundo reto, passa por cima da barra da frente da trava da ponte
 CL_XB = TR_YF - 1 - CL_OY;               // fim do pé, 1 mm além da barra
-CL_XL = PC - YK_R - 0.4 - CL_OY;         // face de dentro da aba (0,4 mm da borda da base do giro)
-CL_YL = TR_Z1 + 0.3 - CL_OZ;             // fundo da aba (0,3 mm acima da moldura)
 module clip_rig_2d(p = CLP) {    // corpo inclinado + base reta apoiada na base do giro
     if (len(p) > 0) {
         intersection() {
@@ -819,7 +816,6 @@ module clip_rig_2d(p = CLP) {    // corpo inclinado + base reta apoiada na base 
             }
             translate([-100, CL_Y0 - CL_FT]) square([200, 200]);
         }
-        translate([CL_XB, CL_YL]) square([CL_XL - CL_XB, CL_Y0 - CL_FT - CL_YL + 0.01]);   // aba sobre a moldura
     }
 }
 module clip_rig(p = CLP) {
@@ -867,3 +863,7 @@ if (PART == "asm_clip_aberto")  clip_aberto();
 // impressão: clip deitado (perfil na mesa, +X para cima: teto reto no furo em D); porca com o botão na mesa
 if (PART == "clip")       translate([0, 0, CLW/2]) rotate([-90, 0, 0]) rotate([0, 0, -90]) translate([0, -CL_OY, -CL_OZ]) clip_rig();
 if (PART == "porca_clip") translate([0, 0, CK_Z0 + CK_H]) rotate([180, 0, 0]) porca_clip();
+if (PART == "clip_e_porca") {     // os dois na mesma mesa (tudo em PETG)
+    translate([0, 0, CLW/2]) rotate([-90, 0, 0]) rotate([0, 0, -90]) translate([0, -CL_OY, -CL_OZ]) clip_rig();
+    translate([50, 18, CK_Z0 + CK_H]) rotate([180, 0, 0]) porca_clip();
+}
