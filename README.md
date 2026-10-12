@@ -2,13 +2,13 @@
 
 Este rig transforma uma câmera de CCTV analógica (Sanyo VCC-4344) numa filmadora de mão com cara de VHS. Ele é **100 % impresso em 3D**: não usa nenhum parafuso, porca ou peça de metal, e a câmera fica só encaixada, sem usar os parafusos dela.
 
-<p align="center"><img src="docs/img/capa.jpg" width="640" alt="Render do rig montado"><br><sub>Render do modelo. As travas extras aparecem nas imagens dos passos de montagem.</sub></p>
+<p align="center"><img src="docs/img/capa.jpg" width="640" alt="Render do rig montado"><br><sub>Render do modelo com o suporte fixo do celular. A mola do clip aparece aberta, segurando o celular.</sub></p>
 
 - **Câmera:** fica num berço que também guarda o power bank e a EasyCap.
-- **Celular:** um Android serve de monitor e gravador. Ele fica numa articulação com giro, inclinação e rolagem.
-  - **Opção fixa:** um clip de mola do MakerWorld, preso na base do giro, sem articulação. Veja [Suporte fixo do celular](docs/SUPORTE_CLIP.md).
+- **Celular:** um Android serve de monitor e gravador. Ele fica num clip de mola fixo na ponte, inclinado 15° para trás. O clip é um modelo do MakerWorld adaptado; veja [Suporte fixo do celular](docs/SUPORTE_CLIP.md).
+  - A versão anterior, com articulação (giro, inclinação e rolagem), está em [docs/ARTICULACAO.md](docs/ARTICULACAO.md).
 - **Modelo paramétrico:** um único arquivo OpenSCAD (`scad/camcorder_rig_v6.scad`) gera todas as peças. As medidas da câmera, do power bank, da EasyCap, do celular e as folgas ficam no começo do arquivo.
-- **Filamento:** ~180 g no rig completo (~80 g de PETG e ~100 g de PLA), mais ~16 g das peças de teste.
+- **Filamento:** ~155 g no rig completo (~115 g de PETG e ~40 g de PLA), mais ~16 g das peças de teste.
 
 ## Como cada parte prende
 
@@ -18,8 +18,7 @@ Este rig transforma uma câmera de CCTV analógica (Sanyo VCC-4344) numa filmado
 | **Ponte do topo** | Entra por trás, por baixo dos lábios das duas colunas. Os lábios descem para a frente, então a ponte funciona como cunha e aperta a câmera quando é empurrada. Uma moldura (trava da ponte) segura as colunas juntas. |
 | **Power bank** | Molas no fundo do berço e uma trava traseira de encaixe. |
 | **Cabo (empunhadura)** | Baioneta em rabo de andorinha: 2 garras sobem pelas janelas do berço e correm 13 mm para a frente. Uma chave trava. Veja [como o cabo prende](docs/img/como_o_cabo_prende.png). |
-| **Giro, inclinação e rolagem** | Parafusos, porcas e botões impressos, com rosca de 8 mm e passo de 2 mm. A rosca é direita (aperta no sentido horário). |
-| **Celular** | Garra com mordente que desliza e trava. A abertura (lado menor + espessura do celular) vai de ~68 a ~88 mm; o S21 dá 71,2 + 7,9 = 79,1 mm. Uma trava lateral com 2 cursores segura o celular nas pontas, para celulares de ~140 a ~172 mm de comprimento. Veja [como funciona](docs/img/como_funciona_trava_celular.png). |
+| **Celular** | Clip de mola: a garra de cima segura o celular deitado pela altura. O pé do clip tem furo em D e encaixa no pino rosqueado da ponte, que não deixa o clip girar. Uma porca-botão impressa (rosca de 8 mm, passo de 2 mm, aperta no sentido horário) prende o pé. Veja [como encaixa](docs/img/como_encaixa.jpg). |
 | **EasyCap** | Caixa fechada do lado esquerdo do berço, com tampa deslizante e espaço para o adaptador OTG e as sobras de cabo. |
 
 <p align="center"><img src="docs/img/renders.jpg" width="820" alt="Renders do rig"></p>
@@ -37,7 +36,7 @@ Este rig transforma uma câmera de CCTV analógica (Sanyo VCC-4344) numa filmado
 | Adaptador OTG (USB-A fêmea → USB-C) | Fica dentro da caixa. |
 | Cabo BNC → RCA | Liga a saída de vídeo da câmera à EasyCap. |
 | Celular Android | O modelo de referência é o Galaxy S21. No **iPhone** não funciona, porque o iOS não deixa apps usarem placas de captura USB. |
-| EVA adesivo fino (opcional) | Dentro das mandíbulas da garra. |
+| EVA adesivo fino (opcional) | Nos dentes do clip, para o celular não escorregar para os lados. |
 
 ## Peças
 
@@ -46,19 +45,19 @@ Este rig transforma uma câmera de CCTV analógica (Sanyo VCC-4344) numa filmado
 | Berço | `berco.stl` | 2 (PETG) | 1 |
 | Tampa da caixa da EasyCap | `tampa.stl` | 2 (PETG) | 1 |
 | Cabo | `cabo.stl` | 3 (PLA) | 1 |
-| Ponte do topo (com o pino rosqueado do giro) | `topo.stl` | 3 (PLA)* | 1 |
-| Garfo, braço, garra e mordente | `garfo.stl`, `braco.stl`, `garra.stl`, `mordente.stl` | 3 (PLA) | 1 de cada |
-| Parafuso e porca-botão da inclinação, parafuso-botão da rolagem, parafusos de trava do giro e do mordente, porca e arruela em D do giro, chave do cabo | `parafusos.stl` | 4 (PLA) | 8 peças |
+| Ponte do topo (com o pino rosqueado) | `topo.stl` | 3 (PLA)* | 1 |
+| Chave do cabo | `chave.stl` | 3 (PLA) | 1 |
 | Trava da ponte (moldura) | `trava_ponte.stl` | 5 (PETG) | 1 |
-| Trava lateral do celular: calha, 2 cursores e 2 botões | `trava_celular.stl` | 6 (PLA) | 5 peças |
+| Clip do celular + porca-botão | o clip você gera ([veja como](docs/SUPORTE_CLIP.md)); `porca_clip.stl` | 7 (PETG) | 1 de cada |
 | Provas de encaixe | `testes_pla.stl`, `testes_petg.stl` | 1a / 1b | — |
-| Porca-botão do suporte fixo (só na [opção com clip](docs/SUPORTE_CLIP.md)) | `porca_clip.stl` | 8 (PLA) | 1 |
+
+A mesa 3 é a `3_cabo_ponte_chave_PLA.3mf`. As outras mesas da pasta (`3_cabo_e_articulacao`, `4_parafusos`, `6_trava_celular`) são da [versão articulada](docs/ARTICULACAO.md).
 
 \* A ponte fica apertada o tempo todo. Se ela ceder com o tempo, reimprima em PETG.
 
 <p align="center"><img src="docs/img/mesas.png" width="820" alt="Mesas de impressão"></p>
 
-As configurações do fatiador estão em [docs/COMO_IMPRIMIR.md](docs/COMO_IMPRIMIR.md). Nenhuma peça precisa de suporte. As maiores são o berço (101 × 169 × 78 mm), a calha da trava do celular (200 mm de comprimento) e o cabo (105 mm de altura, impresso em pé).
+As configurações do fatiador estão em [docs/COMO_IMPRIMIR.md](docs/COMO_IMPRIMIR.md). Nenhuma peça precisa de suporte. As maiores são o berço (101 × 169 × 78 mm), o cabo (105 mm de altura, impresso em pé) e o clip (84 × 56 mm, deitado).
 
 ## Antes de imprimir: provas e ajustes
 
@@ -68,7 +67,6 @@ Imprima as mesas **1a** (PLA) e **1b** (PETG) e confira cada prova. Se algo fica
 |---|---|---|
 | Parafuso + porca | Entra só com os dedos, sem ficar bambo | `TH_CL` (folga da rosca, 0,3 mm) |
 | Garra do cabo + canal da baioneta | Corre e aperta no fim do curso | `DV_CL` |
-| Espinha + mordente | Desliza sem folga | `SP_CL` |
 | Sela | O ferro da sua câmera entra entre as bochechas sem forçar | `BRK_UW` (largura do ferro, 21,6 mm) |
 | Fatia do berço | A câmera e o power bank cabem com folga pequena | `CL`, `PB`, `CAM_W` |
 | Pedaço da tampa | Corre nos trilhos da fatia | `LID_X0`, `LID_X1`, `GR_Z1` (folgas da tampa) |
@@ -79,7 +77,7 @@ Os `.3mf` não se atualizam sozinhos. Depois de mudar um parâmetro, gere o STL 
 openscad -D 'PART="berco"' -o stl/berco.stl scad/camcorder_rig_v6.scad
 ```
 
-Os nomes de `PART` são: `topo`, `berco`, `tampa`, `cabo`, `garfo`, `braco`, `garra`, `mordente`, `parafusos`, `trava_ponte`, `trava_celular`, `testes_pla` e `testes_petg`. Com `PART="montagem"`, o arquivo mostra tudo montado.
+Os nomes de `PART` são: `topo`, `berco`, `tampa`, `cabo`, `trava_ponte`, `clip`, `porca_clip`, `clip_e_porca`, `testes_pla` e `testes_petg`. Com `PART="montagem"`, o arquivo mostra tudo montado. As peças da versão articulada estão em [docs/ARTICULACAO.md](docs/ARTICULACAO.md).
 
 ## Montagem
 
@@ -100,28 +98,16 @@ Não precisa de ferramenta. Cada passo indica para que lado ele é feito.
 4. **Ponte do topo e trava da ponte:**
    - Apoie a ponte em cima da câmera, atrás das colunas, com o gancho para a frente.
    - Empurre a ponte para a frente, por baixo dos lábios, até ficar bem firme.
-   - Encaixe a trava da ponte por cima, em volta das duas colunas e da base do giro. Isso tem que ser feito **antes** de colocar o garfo.
+   - Encaixe a trava da ponte por cima, em volta das duas colunas e da base do giro. Isso tem que ser feito **antes** de colocar o clip.
 
    <img src="docs/img/trava_ponte.jpg" width="420" alt="Trava da ponte">
-5. **Giro:**
-   - Coloque o garfo no pino, a arruela com furo em D e a porca sextavada.
-   - Aperte até o garfo girar firme.
-   - Rosqueie o parafuso da trava do giro na orelha da frente do garfo.
-6. **Inclinação:**
-   - Ponha o braço entre as orelhas do garfo.
-   - Passe o parafuso pela orelha **direita**, com a face plana para cima, encaixando no furo em D.
-   - Rosqueie a porca-botão do lado esquerdo.
-7. **Rolagem:** encoste a garra atrás do braço e passe o parafuso-botão pela frente do braço, rosqueando na garra.
-8. **Trava do celular e celular:**
-   - Enfie um cursor em cada ponta da calha, com os botões para baixo e as paredes viradas para o meio.
-   - Rosqueie um botão em cada cursor.
-   - Encaixe a calha no V da garra de baixo, com os dedos abraçando as pontas da garra.
-   - Ponha o celular com o USB-C para a esquerda.
-   - Encoste os cursores nas pontas do celular e aperte os botões.
-   - Enfie o mordente pelo topo da espinha, desça até encostar no celular e aperte o botão do mordente com firmeza.
+5. **Clip do celular:**
+   - Encaixe o pé do clip no pino da ponte, com a mola em espiral para a frente (lado da lente). O furo em D só entra numa posição.
+   - Rosqueie a porca-botão no pino, por cima do clip, no sentido horário, até o pé ficar firme.
+   - Levante a garra de cima, apoie o celular nos dentes, com a tela para trás e o USB-C para a esquerda, e solte a garra.
 
-   <img src="docs/img/trava_celular.jpg" width="620" alt="Trava lateral do celular">
-9. **EasyCap:**
+   <img src="docs/img/suporte_clip.jpg" width="820" alt="Suporte fixo do celular">
+6. **EasyCap:**
    - Puxe a tampa da caixa pela ponta de trás, no rasgo para a unha.
    - Deite a EasyCap no fundo da caixa, com o USB para a frente, e encaixe o adaptador OTG.
    - Passe o cabo OTG pelo rasgo da frente e o RCA pelo rasgo de trás. As sobras de cabo ficam por cima.
@@ -135,33 +121,28 @@ Não precisa de ferramenta. Cada passo indica para que lado ele é feito.
    - Confira a polaridade com multímetro antes de ligar. Não ligue nada nos bornes da entrada AC 24 V.
 2. **Vídeo:** BNC "VIDEO OUT" → cabo BNC/RCA → RCA amarelo da EasyCap.
 3. **Celular:**
-   - Ligue o adaptador OTG ao celular passando pelo rasgo da frente e pelo gancho da ponte. Deixe uma folga perto da articulação.
+   - Ligue o adaptador OTG ao celular passando pelo rasgo da frente e pelo gancho da ponte. Deixe uma folga perto do clip.
    - No celular, use um app de câmera USB.
 
-## Movimentos do celular
+## Posição do celular
 
-| Movimento | Faixa |
-|---|---|
-| Giro | 360° |
-| Inclinação | −35° a +95° |
-| Rolagem | ±30° |
-| Inclinar para trás e rolar ao mesmo tempo | Com ±15° de rolagem, vai até −25°. Com ±30°, não incline para trás. |
+O celular fica fixo, inclinado 15° para trás, com a tela apontando um pouco para cima. Para mudar o ângulo, altere `CL_INC` no `.scad` e gere o clip de novo.
 
 ## Verificações (`tools/`)
 
-Os scripts conferem colisões entre todas as peças e a câmera (usando o modelo aproximado em `ref/`), varrem os movimentos do celular, calculam o centro de massa e estimam o filamento. Rode da raiz do repositório. Precisa de OpenSCAD 2021+ e Python 3 com os pacotes do `requirements.txt`.
+Os scripts conferem colisões entre todas as peças e a câmera (usando o modelo aproximado em `ref/`), calculam o centro de massa e estimam o filamento. Rode da raiz do repositório. Precisa de OpenSCAD 2021+ e Python 3 com os pacotes do `requirements.txt`. O clip precisa do arquivo gerado por `tools/clip_perfil.py` ([veja como](docs/SUPORTE_CLIP.md)).
 
 ```bash
 pip install -r requirements.txt
-bash tools/build6.sh asm_ topo berco tampa cabo chave porca trava_ponte garfo trava bincl braco garra brol mordente bmord trava_celular
-python3 tools/check6.py          # colisões e movimentos
-python3 tools/cog6.py            # centro de massa e estabilidade em pé
+bash tools/build6.sh asm_ topo berco tampa cabo chave trava_ponte clip porca_clip celular_clip
+python3 tools/check_clip.py      # colisões e folgas
+python3 tools/cog_clip.py        # centro de massa e estabilidade em pé
 python3 tools/filamento.py stl/*.stl
 ```
 
-**Resultado da v6:**
-- **Colisões:** nenhuma entre as peças, nas faixas de movimento da tabela acima.
-- **Equilíbrio:** o centro de massa fica a ~4 mm da mão.
+**Resultado:**
+- **Colisões:** nenhuma entre as peças. O clip fica 7 mm acima da câmera e 1,5 mm acima da moldura.
+- **Equilíbrio:** o centro de massa fica ~1,5 mm atrás da mão.
 - **Em pé:** o rig só tomba com mais de ~6° de inclinação.
 
 ## Glossário
@@ -169,7 +150,7 @@ python3 tools/filamento.py stl/*.stl
 - **Ferro:** a chapa de metal embaixo da câmera, onde normalmente vai a rosca de tripé.
 - **Sela e bochechas:** o apoio do ferro no berço e as duas paredes que o guiam dos lados.
 - **Lábios:** as abas no alto das colunas que seguram a ponte por cima.
-- **Mordente:** a mandíbula de cima da garra do celular, que desliza na espinha.
+- **Clip:** o suporte de mola do celular, um modelo do MakerWorld adaptado para encaixar na ponte.
 - **OTG:** adaptador que deixa o celular usar um aparelho USB.
 - **Step-up:** conversor que sobe os 5 V do power bank para os 12 V da câmera.
 - **BNC:** o conector de vídeo da câmera.
@@ -178,7 +159,8 @@ python3 tools/filamento.py stl/*.stl
 
 - **v1–v4:** protótipos. Usavam os parafusos da câmera, uma luva e um pino impresso rosqueado no ferro, que quebrava.
 - **v5:** berço sem os parafusos da câmera, caixa da EasyCap, garra ajustável e ~150 g de filamento. Ainda usava ferragens de metal.
-- **v6 (atual):** 100 % impresso, com ponte em cunha, cabo em baioneta e roscas impressas. Depois do primeiro teste montado vieram a trava da ponte, a trava lateral ajustável do celular e parafusos de trava mais longos.
+- **v6:** 100 % impresso, com ponte em cunha, cabo em baioneta e roscas impressas. Depois do primeiro teste montado vieram a trava da ponte, a trava lateral ajustável do celular e parafusos de trava mais longos.
+- **v6.1 (atual):** a articulação do celular deu lugar a um clip de mola fixo, inclinado 15°, preso no pino da ponte por uma porca-botão.
 
 ## Licença
 
